@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Documentação</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-card { max-width:320px; margin:80px auto; background:#4e4e4e; padding:20px; border-radius:8px; color:white; }
+        .login-card input { width:100%; padding:8px; margin:6px 0; border-radius:4px; border: none; }
+        .login-card button { width:100%; padding:8px; margin-top:8px; border-radius:4px; border:none; background:#080045; color:white; cursor:pointer }
+        .note { font-size:0.8em; opacity:0.9; margin-top:8px }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h3>Entrar — Documentação</h3>
+        <label>Usuário</label>
+        <input id="user" type="text" autocomplete="username" value="">
+        <label>Senha</label>
+        <div class="pass-wrap">
+            <input id="pass" type="password" autocomplete="current-password" value="">
+            <button id="togglePass" type="button" aria-pressed="false" title="Ver senha" class="toggle-pass">Mostrar senha</button>
+        </div>
+        <button id="btn" class="btn-primary">Entrar</button>
+        <p class="note">Nota: este sistema de login é apenas um exemplo em cliente e não é seguro para dados sensíveis. Para produção, use autenticação no servidor.</p>
+        <p id="error" style="color:#ff5e5e; display:none; margin-top:8px; font-size:0.9em"></p>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+    (function(){
+        var params = new URLSearchParams(location.search);
+        var redirectTo = params.get('redirect') || 'guia.html';
+
+        var btn = document.getElementById('btn');
+        var err = document.getElementById('error');
+        var toggle = document.getElementById('togglePass');
+        var pass = document.getElementById('pass');
+
+        // Toggle password visibility
+        if (toggle && pass) {
+            toggle.addEventListener('click', function(){
+                var isHidden = pass.type === 'password';
+                pass.type = isHidden ? 'text' : 'password';
+                toggle.textContent = isHidden ? 'Ocultar' : 'Mostrar';
+                toggle.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+                toggle.title = isHidden ? 'Ocultar senha' : 'Ver senha';
+            });
+        }
+        btn.addEventListener('click', function(){
+            var u = document.getElementById('user').value.trim();
+            var p = document.getElementById('pass').value;
+            if (window.SisAuth.authenticate(u,p)){
+                window.SisAuth.setAuth();
+                location.href = redirectTo;
+            } else {
+                err.style.display = 'block';
+                err.textContent = 'Usuário ou senha incorretos.';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="auth.js"></script>
+    <script>window.SisAuth.requireAuth();</script>
+
+    <div style="max-width:900px;margin:40px auto;color:white;padding:20px;">
+        <h1>Documentação</h1>
+        <p>Bem-vindo à área de documentação. Esta página requer autenticação.</p>
+        <p>Conteúdo da documentação vai aqui.</p>
+        <p><a class="logout" href="#" id="logout">Sair</a></p>
+    </div>
+
+    <script>
+        document.getElementById('logout').addEventListener('click', function(e){
+            e.preventDefault();
+            window.SisAuth.clearAuth();
+            location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
