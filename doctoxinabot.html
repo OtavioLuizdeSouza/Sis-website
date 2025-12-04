@@ -1,16 +1,262 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentos Toxina Botulínica</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Anamnese - Toxina Botulínica</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root{--bg:#fff;--accent:#080045;--muted:#666}
+        /* keep global site background from style.css; paper stays white */
+        body{font-family: Arial, Helvetica, sans-serif; background:transparent; margin:0; padding:24px; color:#111}
+        .paper{max-width:780px; margin:0 auto; background:var(--bg); padding:26px 34px; box-shadow:0 6px 18px rgba(0,0,0,0.08);}    
+        .header{display:flex; justify-content:space-between; align-items:flex-start;}
+        .brand{font-weight:700; color:#4e4e4e; font-size:28px; letter-spacing:1px}
+        .subtitle{font-family:'Georgia',serif; font-size:22px; color:#222}
+        .meta{margin-top:6px; font-size:14px; color:var(--muted)}
+        .row{display:flex; gap:12px; margin-top:16px}
+        .row > *{flex:1}
+        label{font-size:13px; color:#222}
+        input[type=text], input[type=date], input[type=number], textarea, select{width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #d0d0d5; border-radius:4px; background:#fff}
+        textarea{min-height:60px; resize:vertical}
+        .questions{margin-top:18px}
+        .q{margin-bottom:10px; display:flex; gap:12px; align-items:flex-start}
+        .q-number{width:40px; font-weight:600}
+        .q-body{flex:1}
+        .yesno{display:inline-flex; gap:10px; align-items:center}
+        .small{font-size:13px; color:var(--muted)}
+        .signature{margin-top:20px; display:flex; gap:16px; align-items:center}
+        .signature input{width:45%}
+        .notice{margin-top:18px; text-align:center; font-weight:700}
+        .actions{margin-top:18px; display:flex; justify-content:flex-end; gap:8px}
+        .btn{background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer}
+        @media print{body{background:#fff} .paper{box-shadow:none; margin:0; padding:12px} .actions{display:none}}
+    </style>
 </head>
 <body>
+    <div id="navegacaodoc">                    
+        <a href="https://www.google.com/maps/place/R.+Jo%C3%A3o+Francisco+Menezes+Junqueira,+597+-+Jardim+Virginia,+Batatais+-+SP,+14300-000/@-20.8840702,-47.579217,17z/data=!3m1!4b1!4m6!3m5!1s0x94b9fae61d7b9555:0xbc71aeb1d7e18d46!8m2!3d-20.8840752!4d-47.5766421!16s%2Fg%2F11thhwvm1t?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Nossa Localização</a> |
+        <a href="index.html" class="logo-link"><img class="logo" src="imagens/sisadoc.png" alt="Sisá"></a> |
+        <a href="documentacao-new.html"> Documentação</a>   
+    </div>
+    <main class="paper">
+        <div class="header">
+            <div>
+                <div class="brand">ANAMNESE</div>
+                <div class="subtitle">Toxina Botulínica</div>
+                <div class="row" style="align-items:center; gap:12px; margin-top:8px">
+                    <div style="flex:2">
+                        <label style="font-weight:600">Paciente:</label>
+                        <input type="text" name="paciente" id="paciente" placeholder="Nome do paciente" style="width:100%; margin-top:6px">
+                    </div>
+                    <div style="flex:1">
+                        <label style="font-weight:600">Idade:</label>
+                        <input type="number" name="idade" id="idade" style="width:100%; margin-top:6px">
+                    </div>
+                </div>
+                <div class="meta" style="margin-top:10px">Data de Nascimento: <input type="date" name="data_nascimento" id="data_nascimento" style="display:inline-block; margin-left:8px; width:220px"></div>
+            </div>
+            <div style="text-align:right; font-size:12px; color:var(--muted)">
+                <!-- espaço para logo ou identificação -->
+            </div>
+        </div>
+
+        <section class="questions">
+            <div class="q">
+                <div class="q-number">1.</div>
+                <div class="q-body">
+                    <label>Você identifica que o canto da boca é caído/virado para baixo (como sorriso triste)?</label>
+                    <div class="yesno"><label><input type="radio" name="q1" value="sim"> Sim</label> <label><input type="radio" name="q1" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">2.</div>
+                <div class="q-body">
+                    <label>O seu queixo tem furinhos como "celulite"?</label>
+                    <div class="yesno"><label><input type="radio" name="q2" value="sim"> Sim</label> <label><input type="radio" name="q2" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">3.</div>
+                <div class="q-body">
+                    <label>Ao morder forte, você identifica rugas/marcas no pescoço?</label>
+                    <div class="yesno"><label><input type="radio" name="q3" value="sim"> Sim</label> <label><input type="radio" name="q3" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">4.</div>
+                <div class="q-body">
+                    <label>Na testa você tem rugas nas laterais da face, no sentido vertical ou diagonal?</label>
+                    <div class="yesno"><label><input type="radio" name="q4" value="sim"> Sim</label> <label><input type="radio" name="q4" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">5.</div>
+                <div class="q-body">
+                    <label>Tem ou teve alguma doença grave?</label>
+                    <div class="yesno"><label><input type="radio" name="q5" value="sim"> Sim</label> <label><input type="radio" name="q5" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">6.</div>
+                <div class="q-body">
+                    <label>Alergia lactose?</label>
+                    <div class="yesno"><label><input type="radio" name="q6" value="sim"> Sim</label> <label><input type="radio" name="q6" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">7.</div>
+                <div class="q-body">
+                    <label>Alergia ovo?</label>
+                    <div class="yesno"><label><input type="radio" name="q7" value="sim"> Sim</label> <label><input type="radio" name="q7" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">8.</div>
+                <div class="q-body">
+                    <label>Outra alergia: <input type="text" name="q8_outro" placeholder="Especifique"></label>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">9.</div>
+                <div class="q-body">
+                    <label>Lesões na pele?</label>
+                    <div class="yesno"><label><input type="radio" name="q9" value="sim"> Sim</label> <label><input type="radio" name="q9" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">10.</div>
+                <div class="q-body">
+                    <label>Cuidados estéticos diários Skin Care?</label>
+                    <div class="yesno"><label><input type="radio" name="q10" value="sim"> Sim</label> <label><input type="radio" name="q10" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">11.</div>
+                <div class="q-body">
+                    <label>Está em uso de antibiótico, relaxante muscular, corticoide, anticoagulante ou anti inflamatório? Se sim, qual?</label>
+                    <input type="text" name="q11_motivo" placeholder="Motivo / medicamento">
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">12.</div>
+                <div class="q-body">
+                    <label>Mulheres: Gestante ou Lactante?</label>
+                    <div class="yesno"><label><input type="radio" name="q12" value="sim"> Sim</label> <label><input type="radio" name="q12" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">13.</div>
+                <div class="q-body">
+                    <label>Fez vacina anti tetânica a pouco tempo?</label>
+                    <div class="yesno"><label><input type="radio" name="q13" value="sim"> Sim</label> <label><input type="radio" name="q13" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">14.</div>
+                <div class="q-body">
+                    <label>Fez vacina Covid a pouco tempo?</label>
+                    <div class="yesno"><label><input type="radio" name="q14" value="sim"> Sim</label> <label><input type="radio" name="q14" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">15.</div>
+                <div class="q-body">
+                    <label>Teve Covid?</label>
+                    <div style="margin-top:6px"><label><input type="radio" name="q15" value="sim"> Sim</label> <label><input type="radio" name="q15" value="nao"> Não</label> <span class="small">Se sim, quando? <input type="text" name="q15_quando" placeholder="Data / período" style="width:220px"></span></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">16.</div>
+                <div class="q-body">
+                    <label>Já realizou algum procedimento estético na face? (Toxina Botulínica, ácido hialurônico, bioestimulador de colágeno, microagulhamento, peeling, hidratação injetável, PMMA, Lifting, cirurgia plástica, outros)</label>
+                    <div style="margin-top:6px"><label><input type="radio" name="q16" value="sim"> Sim</label> <label><input type="radio" name="q16" value="nao"> Não</label></div>
+                    <div style="margin-top:8px"><label>Se sim, quais procedimentos realizou e quanto tempo faz a ultima aplicação?</label>
+                        <textarea name="q16_detalle" placeholder="Descreva"></textarea></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">17.</div>
+                <div class="q-body">
+                    <label>Como foi sua experiência anterior com Toxina Botulínica?</label>
+                    <textarea name="q17_exp" placeholder="Descreva"></textarea>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">18.</div>
+                <div class="q-body">
+                    <label>Se expõe ao sol com frequência?</label>
+                    <div class="yesno"><label><input type="radio" name="q18" value="sim"> Sim</label> <label><input type="radio" name="q18" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">19.</div>
+                <div class="q-body">
+                    <label>Ingere pelo menos 2 litros de água por dia?</label>
+                    <div class="yesno"><label><input type="radio" name="q19" value="sim"> Sim</label> <label><input type="radio" name="q19" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">20.</div>
+                <div class="q-body">
+                    <label>O que gostaria de melhorar em sua face? Ou prevenir?</label>
+                    <textarea name="q20" placeholder="Descreva"></textarea>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">21.</div>
+                <div class="q-body">
+                    <label>Gostaria de informar algo que não foi perguntado?</label>
+                    <div class="yesno"><label><input type="radio" name="q21" value="sim"> Sim</label> <label><input type="radio" name="q21" value="nao"> Não</label></div>
+                    <div style="margin-top:8px"><label>Cite: <input type="text" name="q21_cite" placeholder="Escreva" style="width:60%"></label></div>
+                </div>
+            </div>
+
+            <div class="q">
+                <div class="q-number">22.</div>
+                <div class="q-body">
+                    <label>Autoriza a divulgação de foto antes/depois do tratamento?</label>
+                    <div class="yesno"><label><input type="radio" name="q22" value="sim"> Sim</label> <label><input type="radio" name="q22" value="nao"> Não</label></div>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="notice">RESPONSABILIZO-ME PELA VERACIDADE DE TODAS AS RESPOSTAS ACIMA CITADAS</div>
+
+        <div class="signature">
+            <label style="width:65%">Assinatura: <input type="text" name="assinatura" id="assinatura" placeholder="Assinatura" style="width:100%; margin-left:8px"></label>
+            <label>Data: <input type="date" name="assinatura_data" id="assinatura_data" style="margin-left:8px"></label>
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn" style="background:#4e4e4e" onclick="window.print();">Imprimir</button>
+            <button type="reset" class="btn" style="background:#4e4e4e">Limpar</button>
+        </div>
+    </main>
     <footer class="footer">
-    <p>© 2026 Sisá. Todos os direitos reservados.</p>
-    <p>Desenvolvido por Otávio Luiz de Souza</p>
-</footer>
+        <p>© 2026 Sisá. Todos os direitos reservados.</p>
+        <p>Desenvolvido por Otávio Luiz de Souza</p>
+    </footer>
 </body>
 </html>
