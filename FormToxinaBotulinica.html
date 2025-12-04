@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anamnese - Toxina Botulínica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: #333;
+            letter-spacing: 2px;
+        }
+        
+        .header h2 {
+            font-size: 24px;
+            color: #667eea;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .info-paciente {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .section-title {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 30px 0 20px 0;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .question-text {
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .additional-input {
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .additional-input.show {
+            display: block;
+        }
+        
+        .declaration {
+            margin: 40px 0 30px 0;
+            padding: 20px;
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .mensagem {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .sucesso {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .erro {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        .config-warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .config-warning h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .config-warning code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    
+
+        <div class="header">
+            <h1>ANAMNESE</h1>
+            <h2>Toxina Botulínica</h2>
+        </div>
+
+        <form id="formAnamnese">
+            <div class="info-paciente">
+                <div class="form-group">
+                    <label>Paciente:</label>
+                    <input type="text" name="paciente" required>
+                </div>
+                <div class="form-group">
+                    <label>Idade:</label>
+                    <input type="number" name="idade" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Data de Nascimento:</label>
+                <input type="date" name="dataNascimento" required>
+            </div>
+
+            <div class="section-title">HISTÓRICO CLÍNICO - PARTE 2:</div>
+
+            <div class="question">
+                <div class="question-text">21. Você identifica que o canto da boca é caído/ virado para baixo (como sorriso triste)?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q21" value="Sim" id="q21_sim">
+                        <label for="q21_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q21" value="Não" id="q21_nao">
+                        <label for="q21_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">22. O seu queixo tem furinhos como "celulite"?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q22" value="Sim" id="q22_sim">
+                        <label for="q22_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q22" value="Não" id="q22_nao">
+                        <label for="q22_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">23. Ao morder forte, você identifica rugas/ marcas no pescoço?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q23" value="Sim" id="q23_sim">
+                        <label for="q23_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q23" value="Não" id="q23_nao">
+                        <label for="q23_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">24. Na testa você tem rugas nas laterais da face, no sentido vertical ou diagonal?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q24" value="Sim" id="q24_sim">
+                        <label for="q24_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q24" value="Não" id="q24_nao">
+                        <label for="q24_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">25. Tem ou teve alguma doença grave?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q25" value="Sim" id="q25_sim">
+                        <label for="q25_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q25" value="Não" id="q25_nao">
+                        <label for="q25_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">26. Alergia lactose?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q26" value="Sim" id="q26_sim">
+                        <label for="q26_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q26" value="Não" id="q26_nao">
+                        <label for="q26_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">27. Alergia ovo?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q27" value="Sim" id="q27_sim">
+                        <label for="q27_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q27" value="Não" id="q27_nao">
+                        <label for="q27_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">28. Outra alergia:</div>
+                <input type="text" name="q28" placeholder="Especifique se houver">
+            </div>
+
+            <div class="question">
+                <div class="question-text">29. Lesões na pele?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q29" value="Sim" id="q29_sim">
+                        <label for="q29_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q29" value="Não" id="q29_nao">
+                        <label for="q29_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">30. Cuidados estéticos diários Skin Care?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q30" value="Sim" id="q30_sim">
+                        <label for="q30_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q30" value="Não" id="q30_nao">
+                        <label for="q30_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">31. Está em uso de antibiótico, relaxante muscular, corticoides, anticoagulante ou anti inflamatório?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q31" value="Sim" id="q31_sim" onchange="toggleAdditional('q31')">
+                        <label for="q31_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q31" value="Não" id="q31_nao" onchange="toggleAdditional('q31')">
+                        <label for="q31_nao">Não</label>
+                    </div>
+                </div>
+                <div id="q31_additional" class="additional-input">
+                    <label>Se sim, qual(is)?</label>
+                    <input type="text" name="q31_qual" placeholder="Medicamento">
+                    <label>Motivo:</label>
+                    <input type="text" name="q31_motivo" placeholder="Motivo do uso">
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">32. Mulheres: Gestante ou Lactante?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q32" value="Sim" id="q32_sim">
+                        <label for="q32_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q32" value="Não" id="q32_nao">
+                        <label for="q32_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">33. Fez vacina anti tetânica a pouco tempo?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q33" value="Sim" id="q33_sim" onchange="toggleAdditional('q33')">
+                        <label for="q33_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q33" value="Não" id="q33_nao" onchange="toggleAdditional('q33')">
+                        <label for="q33_nao">Não</label>
+                    </div>
+                </div>
+                <div id="q33_additional" class="additional-input">
+                    <label>Quanto tempo?</label>
+                    <input type="text" name="q33_tempo">
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">34. Fez vacina Covid a pouco tempo?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q34" value="Sim" id="q34_sim" onchange="toggleAdditional('q34')">
+                        <label for="q34_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q34" value="Não" id="q34_nao" onchange="toggleAdditional('q34')">
+                        <label for="q34_nao">Não</label>
+                    </div>
+                </div>
+                <div id="q34_additional" class="additional-input">
+                    <label>Quanto tempo?</label>
+                    <input type="text" name="q34_tempo">
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">35. Teve Covid?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q35" value="Sim" id="q35_sim" onchange="toggleAdditional('q35')">
+                        <label for="q35_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q35" value="Não" id="q35_nao" onchange="toggleAdditional('q35')">
+                        <label for="q35_nao">Não</label>
+                    </div>
+                </div>
+                <div id="q35_additional" class="additional-input">
+                    <label>Quando?</label>
+                    <input type="text" name="q35_quando">
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">36. Já realizou algum procedimento estético na face: Toxina Botulínica, ácido hialurônico, bioestimulador de colágeno, microagulhamento, peeling, hidratação injetável, PMMA, Lifting, cirurgia plástica, outros?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q36" value="Sim" id="q36_sim" onchange="toggleAdditional('q36')">
+                        <label for="q36_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q36" value="Não" id="q36_nao" onchange="toggleAdditional('q36')">
+                        <label for="q36_nao">Não</label>
+                    </div>
+                </div>
+                <div id="q36_additional" class="additional-input">
+                    <label>Se sim, quais procedimentos realizou e quanto tempo faz a última aplicação?</label>
+                    <textarea name="q36_detalhes"></textarea>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">37. Como foi sua experiência anterior com Toxina Botulínica?</div>
+                <textarea name="q37"></textarea>
+            </div>
+
+            <div class="question">
+                <div class="question-text">38. Se expõe ao sol com frequência?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q38" value="Sim" id="q38_sim">
+                        <label for="q38_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q38" value="Não" id="q38_nao">
+                        <label for="q38_nao">Não</label>
+                    </div>
+                </div>
+                <label style="margin-top: 10px;">Usa protetor solar?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q38_protetor" value="Sim" id="q38_protetor_sim">
+                        <label for="q38_protetor_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q38_protetor" value="Não" id="q38_protetor_nao">
+                        <label for="q38_protetor_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">39. Ingere pelo menos 2 litros de água por dia?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q39" value="Sim" id="q39_sim">
+                        <label for="q39_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q39" value="Não" id="q39_nao">
+                        <label for="q39_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">40. O que gostaria de melhorar em sua face? Ou prevenir?</div>
+                <textarea name="q40" required></textarea>
+            </div>
+
+            <div class="question">
+                <div class="question-text">41. Gostaria de informar algo que não foi perguntado?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q41" value="Sim" id="q41_sim" onchange="toggleAdditional('q41')">
+                        <label for="q41_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q41" value="Não" id="q41_nao" onchange="toggleAdditional('q41')">
+                        <label for="q41_nao">Não</label>
+                    </div>
+                </div>
+                <div id="q41_additional" class="additional-input">
+                    <label>Cite:</label>
+                    <textarea name="q41_cite"></textarea>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">42. Autoriza a divulgação de foto antes/ depois do tratamento?</div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="q42" value="Sim" id="q42_sim">
+                        <label for="q42_sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="q42" value="Não" id="q42_nao">
+                        <label for="q42_nao">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="declaration">
+                RESPONSABILIZO-ME PELA VERACIDADE DE TODAS AS RESPOSTAS ACIMA CITADAS
+            </div>
+
+            <div class="signature-section">
+                <div class="form-group">
+                    <label>Assinatura:</label>
+                    <input type="text" name="assinatura" placeholder="Digite seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label>Data:</label>
+                    <input type="date" name="dataAssinatura" required>
+                </div>
+            </div>
+
+            <button type="submit" id="btnEnviar">Enviar Anamnese</button>
+        </form>
+
+        <div id="mensagem" class="mensagem"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // 🔥 COLE SUAS CREDENCIAIS DO FIREBASE AQUI
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmk5Mcbrz48POdOJHrnLiyPqbrsEbVKbA",
+            authDomain: "sisa-esteticaavancada.firebaseapp.com",
+            projectId: "sisa-esteticaavancada",
+            storageBucket: "sisa-esteticaavancada.firebasestorage.app",
+            messagingSenderId: "356633488250",
+            appId: "1:356633488250:web:9dd1a70e5c05cff92d84c3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function mostrarMensagem(texto, tipo) {
+            const mensagemDiv = document.getElementById('mensagem');
+            mensagemDiv.textContent = texto;
+            mensagemDiv.className = `mensagem ${tipo}`;
+            mensagemDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                mensagemDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        document.getElementById('formAnamnese').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnEnviar = document.getElementById('btnEnviar');
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'Salvando...';
+            
+            try {
+                const formData = new FormData(e.target);
+                const dados = Object.fromEntries(formData.entries());
+                dados.dataEnvio = new Date().toISOString();
+                
+                await addDoc(collection(db, "anamneses"), dados);
+                
+                mostrarMensagem('✅ Anamnese enviada com sucesso!', 'sucesso');
+                e.target.reset();
+                
+            } catch (error) {
+                console.error("Erro ao salvar:", error);
+                mostrarMensagem('❌ Erro ao enviar. Verifique as configurações do Firebase.', 'erro');
+            } finally {
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = 'Enviar Anamnese';
+            }
+        });
+
+        window.toggleAdditional = function(questionId) {
+            const simRadio = document.getElementById(questionId + '_sim');
+            const additionalDiv = document.getElementById(questionId + '_additional');
+            
+            if (additionalDiv) {
+                if (simRadio.checked) {
+                    additionalDiv.classList.add('show');
+                } else {
+                    additionalDiv.classList.remove('show');
+                }
+            }
+        };
+    </script>
+</body>
+</html>
