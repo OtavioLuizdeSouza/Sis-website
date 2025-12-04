@@ -58,6 +58,50 @@ body {
     text-decoration: none;
 
 }
+#navegacaodoc {
+    background-color: #4e4e4e;
+    margin: 25px auto 25px auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 40%;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.8em;
+    z-index: 10;
+    position: relative;
+    cursor: default;
+    background: #4e4e4e;
+    box-shadow: 0px 1px 8px whitesmoke;
+}
+#navegacaodoc a:link,
+#navegacaodoc a:visited {
+    color: white;
+    padding: 8px 12px;
+}
+
+#navegacaodoc a:hover {
+    color: #4e4e4e;
+    background: white;
+    text-decoration: none;
+    transition: color 0.3s, background 0.3s;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+/* Remover efeito de hover apenas para o link que contém a imagem/logo */
+#navegacaodoc a.logo-link:hover,
+#navegacaodoc a.logo-link:focus {
+    background: transparent;
+    color: inherit;
+    box-shadow: none;
+    transform: none;
+    text-decoration: none;
+
+}
 a {
     text-decoration: none;
     z-index: 11;
@@ -131,6 +175,15 @@ a:hover {
     background: #ffffff;
     color: #111;
     font-size: 0.95rem;
+}
+
+/* Larger, easier-to-click date inputs (applies site-wide) */
+input[type="date"] {
+    padding: 10px 12px;
+    height: 44px;
+    font-size: 16px;
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 .pass-wrap input[type="text"],
 .pass-wrap input[type="password"] {
