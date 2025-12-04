@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sisá</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <div id="navegacao">                    
+        <a href="https://www.google.com/maps/place/R.+Jo%C3%A3o+Francisco+Menezes+Junqueira,+597+-+Jardim+Virginia,+Batatais+-+SP,+14300-000/@-20.8840702,-47.579217,17z/data=!3m1!4b1!4m6!3m5!1s0x94b9fae61d7b9555:0xbc71aeb1d7e18d46!8m2!3d-20.8840752!4d-47.5766421!16s%2Fg%2F11thhwvm1t?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Nossa Localização</a> |
+        <a href="index.html" class="logo-link"><img class="logo" src="imagens/sisa10050.png" alt="Sisá"></a> |
+        <a href="documentacao-new.html" id="docLink">Documentação</a>   
+        </div>
+
+    <script src="auth-api.js"></script>
+    <script>
+        // Verifica se está autenticado ao carregar a página
+        (async function() {
+            const isAuth = await window.SisAuth.isAuthenticated();
+            const docLink = document.getElementById('docLink');
+            
+            if (isAuth) {
+                // Se autenticado, ir direto para documentacao
+                docLink.href = 'documentacao-new.html';
+                console.log('[Index] User is authenticated, docs link points to documentacao-new.html');
+            } else {
+                // Se não autenticado, ir para login
+                docLink.href = 'login-new.html?redirect=documentacao-new.html';
+                console.log('[Index] User is NOT authenticated, docs link points to login');
+            }
+        })();
+    </script>
+
+<footer class="footer">
+    <p>© 2026 Sisá. Todos os direitos reservados.</p>
+    <p>Desenvolvido por Otávio Luiz de Souza</p>
+</footer>
+</body>
+</html>
+

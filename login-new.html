@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Documentação</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+            <div id="navegacao">                    
+        <a href="https://www.google.com/maps/place/R.+Jo%C3%A3o+Francisco+Menezes+Junqueira,+597+-+Jardim+Virginia,+Batatais+-+SP,+14300-000/@-20.8840702,-47.579217,17z/data=!3m1!4b1!4m6!3m5!1s0x94b9fae61d7b9555:0xbc71aeb1d7e18d46!8m2!3d-20.8840752!4d-47.5766421!16s%2Fg%2F11thhwvm1t?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Nossa Localização</a> |
+        <a href="index.html" class="logo-link"><img class="logo" src="imagens/sisa10050.png" alt="Sisá"></a> |
+        <a href="login-new.html?redirect=documentacao-new.html">Documentação</a>   
+        </div>
+    <div class="login-card">
+        <h3>Entrar — Documentação</h3>
+        <label>Usuário</label>
+        <input id="user" type="text" autocomplete="username" value="">
+        <label>Senha</label>
+        <div class="pass-wrap">
+            <input id="pass" type="password" autocomplete="current-password" value="">
+            <button id="togglePass" type="button" aria-pressed="false" title="Ver senha" class="toggle-pass">Mostrar senha</button>
+        </div>
+        <button id="btn" class="btn-primary">Entrar</button>
+        <p class="note">Nota: este sistema de login usa um servidor backend seguro.</p>
+        <p id="error" style="color:#ff5e5e; display:none; margin-top:8px; font-size:0.9em"></p>
+    </div>
+
+    <script src="auth-api.js"></script>
+    <script>
+    (async function(){
+        var params = new URLSearchParams(location.search);
+        var redirectTo = params.get('redirect') || 'documentacao.html';
+
+        var btn = document.getElementById('btn');
+        var err = document.getElementById('error');
+        var toggle = document.getElementById('togglePass');
+        var pass = document.getElementById('pass');
+
+        // Toggle password visibility
+        if (toggle && pass) {
+            toggle.addEventListener('click', function(){
+                var isHidden = pass.type === 'password';
+                pass.type = isHidden ? 'text' : 'password';
+                toggle.textContent = isHidden ? 'Ocultar senha' : 'Mostrar senha';
+                toggle.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+                toggle.title = isHidden ? 'Ocultar senha' : 'Ver senha';
+            });
+        }
+
+        btn.addEventListener('click', async function(){
+            var u = document.getElementById('user').value.trim();
+            var p = document.getElementById('pass').value;
+            
+            if (!u || !p) {
+                err.style.display = 'block';
+                err.textContent = 'Preencha usuário e senha';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+
+            try {
+                const result = await window.SisAuth.login(u, p);
+                if (result.success) {
+                    location.href = redirectTo;
+                } else {
+                    err.style.display = 'block';
+                    err.textContent = result.message || 'Erro ao fazer login';
+                    btn.disabled = false;
+                    btn.textContent = 'Entrar';
+                }
+            } catch (error) {
+                err.style.display = 'block';
+                err.textContent = 'Erro de conexão com servidor';
+                btn.disabled = false;
+                btn.textContent = 'Entrar';
+            }
+        });
+    })();
+    </script>
+    <footer class="footer">
+    <p>© 2026 Sisá. Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>
