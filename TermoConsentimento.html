@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termo de Consentimento - Gerador</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f5f5f5;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-back {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-3px);
+        }
+
+        .navbar-title {
+            color: white;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+        }
+
+        /* Container principal */
+        .main-content {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+        }
+
+        .form-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .form-panel h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #2196F3;
+        }
+
+        .btn-secondary:hover {
+            background: #0b7dda;
+        }
+
+        .document {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 297mm;
+            border-radius: 8px;
+        }
+
+        .document-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .document-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .document-header h2 {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .document-content {
+            text-align: justify;
+            line-height: 1.8;
+            font-size: 12pt;
+        }
+
+        .document-content p {
+            margin-bottom: 15px;
+            text-indent: 2em;
+        }
+
+        .document-content p.no-indent {
+            text-indent: 0;
+        }
+
+        .signature-section {
+            margin-top: 60px;
+        }
+
+        .signature-line {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .signature-line div {
+            display: inline-block;
+            border-top: 1px solid black;
+            padding-top: 5px;
+            min-width: 300px;
+        }
+
+        .data-field {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .navbar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 0;
+            }
+
+            .container {
+                display: block;
+            }
+
+            .form-panel {
+                display: none;
+            }
+
+            .document {
+                box-shadow: none;
+                padding: 40px;
+                border-radius: 0;
+            }
+
+            @page {
+                margin: 2cm;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-panel {
+                position: static;
+                top: 0;
+            }
+
+            .navbar-content {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="btn-back" onclick="voltarHome(event)">
+                <span>←</span>
+                <span>Voltar</span>
+            </a>
+            <span class="navbar-title">Termo de Consentimento - Botulínico</span>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <div class="container">
+            <div class="form-panel">
+                <h2>📋 Dados do Paciente</h2>
+                <form id="patientForm">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo:</label>
+                        <input type="text" id="nome" placeholder="Ex: João da Silva">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label for="rg">RG:</label>
+                        <input type="text" id="rg" placeholder="00.000.000-0">
+                    </div>
+                    <div class="form-group">
+                        <label for="data">Data:</label>
+                        <input type="date" id="data">
+                    </div>
+                    <div class="form-group">
+                        <label for="local">Local:</label>
+                        <input type="text" id="local" placeholder="Ex: São Paulo, SP">
+                    </div>
+                    <button type="button" class="btn" onclick="atualizarDocumento()">
+                        ✓ Atualizar Documento
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="window.print()">
+                        🖨️ Imprimir
+                    </button>
+                </form>
+            </div>
+
+            <div class="document" id="document">
+                <div class="document-header">
+                    <h1>Termo de Consentimento</h1>
+                    <h2>Encaminhamento Botulínico</h2>
+                </div>
+
+                <div class="document-content">
+                    <p class="no-indent">
+                        Eu, <span class="data-field" id="doc_nome">_______________________</span>, CPF: <span class="data-field" id="doc_cpf">_______________</span>, RG: <span class="data-field" id="doc_rg">_______________</span>, portador(a) do tratamento com aplicação de toxina Botulínica tipo A, venho, através deste instrumento, assinar e consentir nesta data o início da minha toxina.
+                    </p>
+
+                    <p>
+                        Atesto que me foi explicado de forma simples e totalmente entendida pelo profissional que me atendeu, informado e orientado em torno de todo o procedimento e seus detalhes, também fui elucidado pelo profissional a respeito de:
+                    </p>
+
+                    <p>
+                        Os procedimentos que serão realizados em face/mimiíca bullhaxia(s), de forma, foram totalmente explicados e entendidos, realizados em torno de todo o procedimento de aplicação, orientação, fundamentação e seus detalhes, também elucidado pelo profissional que me atendeu.
+                    </p>
+
+                    <p>
+                        Estou ciente da necessidade de realizar acompanhamento profissional e eventual manutenção do tratamento conforme orientação médica.
+                    </p>
+
+                    <p>
+                        Os objetivos foram claramente explicados, assim como as expectativas reais do resultado, tempo de procedimento, cuidados necessários para melhor efeito e possível duração do efeito, bem como a necessidade de manutenção periódica.
+                    </p>
+
+                    <p>
+                        Recebi orientações específicas sobre cuidados pós-procedimento, incluindo possíveis efeitos colaterais temporários, bem como situações que requerem contato imediato com o profissional.
+                    </p>
+
+                    <p>
+                        Estive ciente que o período de 4 horas após aplicação do biomodulador de toxina é necessário para evitar contaminação da área tratada, cabendo-me respeitar minuciosamente as orientações médicas repassadas.
+                    </p>
+
+                    <p>
+                        Fui informado(a) que os resultados definitivos podem levar alguns dias durante o procedimento, e que o efeito da toxina botulínica é temporário, necessitando manutenção periódica para preservar os resultados.
+                    </p>
+
+                    <p>
+                        A descriminada toxina irá resultar em compressos de profilaxia mencionado informação ou exposição em conexão com o agente a manutenção.
+                    </p>
+
+                    <p>
+                        Não há oferecer que chegado trazido minúsculos e foram descritas nele outro tratamento que se afirmar de aplicação do objetivo da clínica, cabendo à alguém acerte, a alivio ou não da condicionamento no ativo desconfortantes do tratamento (inflamação, infecção, vermelhidão, formigamento, vasodilatação, formação, hematomas).
+                    </p>
+
+                    <p>
+                        Dessumida-se está ter índia no índia em comesse os exames extatísticos é não há de se para exigir da exposição.
+                    </p>
+
+                    <p>
+                        Durante clínicas atestadas técnico ou alcançado há informação ou exposição ou atribuir exatamente é descrito o experante.
+                    </p>
+
+                    <p>
+                        Em minúsculos procedimentos prometem descritos, equivalente a aceitação deve compreensão que outro procedimento no contato da clínica, em procedimento-se um consentimento protétidos e resumo do criação da técnica exploratório nos procedimento o outro tratamento e prossão.
+                    </p>
+
+                    <p>
+                        A observação, critério e profissional.
+                    </p>
+
+                    <div class="signature-section">
+                        <p class="no-indent">
+                            <span class="data-field" id="doc_local">_______________</span>, <span class="data-field" id="doc_data">_______________</span>
+                        </p>
+
+                        <div class="signature-line">
+                            <div>
+                                Assinatura do Paciente
+                            </div>
+                        </div>
+
+                        <div class="signature-line">
+                            <div>
+                                Assinatura do Profissional
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define data atual ao carregar
+        document.getElementById('data').valueAsDate = new Date();
+
+        // Máscara CPF
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+
+        function atualizarDocumento() {
+            const nome = document.getElementById('nome').value || '_______________________';
+            const cpf = document.getElementById('cpf').value || '_______________';
+            const rg = document.getElementById('rg').value || '_______________';
+            const data = document.getElementById('data').value;
+            const local = document.getElementById('local').value || '_______________';
+
+            // Formata data
+            let dataFormatada = '_______________';
+            if (data) {
+                const d = new Date(data + 'T00:00:00');
+                dataFormatada = d.toLocaleDateString('pt-BR');
+            }
+
+            // Atualiza documento
+            document.getElementById('doc_nome').textContent = nome;
+            document.getElementById('doc_cpf').textContent = cpf;
+            document.getElementById('doc_rg').textContent = rg;
+            document.getElementById('doc_local').textContent = local;
+            document.getElementById('doc_data').textContent = dataFormatada;
+        }
+
+        // Atualiza automaticamente ao digitar
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', atualizarDocumento);
+        });
+
+        // Função voltar
+        function voltarHome(e) {
+            e.preventDefault();
+            // Aqui você pode redirecionar para sua página principal
+            // window.location.href = 'index.html';
+            alert('Aqui você pode redirecionar para a página principal com todos os formulários!');
+        }
+    </script>
+</body>
+</html>
