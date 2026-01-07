@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Administrativo - Anamneses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* === PÁGINA DE LOGIN === */
+        .login-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .login-box h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .login-box p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+        }
+        
+        button.btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button.btn-submit:hover {
+            transform: translateY(-2px);
+        }
+        
+        button.btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .error-msg {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .loading-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* === PAINEL ADMINISTRATIVO === */
+        .admin-panel {
+            display: none;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #667eea;
+        }
+        
+        .user-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .user-email {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .btn-logout {
+            padding: 10px 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-logout:hover {
+            background: #c82333;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .controls-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .btn-export {
+            padding: 12px 24px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-export:hover {
+            background: #218838;
+        }
+        
+        .data-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .btn-view {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-view:hover {
+            background: #5568d3;
+        }
+        
+        .btn-print {
+            padding: 8px 16px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        
+        .btn-print:hover {
+            background: #138496;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        /* === MODAL === */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .btn-close {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .detail-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            color: #666;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .modal-content, .modal-content * {
+                visibility: visible;
+            }
+            .modal-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .modal-header button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOADING INICIAL -->
+    <div id="loadingScreen" class="loading-screen">
+        Carregando...
+    </div>
+
+    <!-- PÁGINA DE LOGIN -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <h1>🔐 Área Administrativa</h1>
+            <p>Sistema de Anamneses</p>
+            
+            <div id="errorMsg" class="error-msg"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Senha:</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPassword" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <span id="eyeIcon">👁️</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="btnLogin">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL ADMINISTRATIVO -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="header">
+            <h1>📋 Painel de Anamneses</h1>
+            <div class="user-info">
+                <span class="user-email" id="userEmail"></span>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalAnamneses">0</div>
+                <div class="stat-label">Total de Anamneses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalHoje">0</div>
+                <div class="stat-label">Hoje</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalSemana">0</div>
+                <div class="stat-label">Esta Semana</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="controls-row">
+                <div class="form-group">
+                    <label>Buscar por nome:</label>
+                    <input type="text" id="searchName" placeholder="Digite o nome do paciente...">
+                </div>
+                
+                <div class="form-group">
+                    <label>Data Início:</label>
+                    <input type="date" id="dateFrom">
+                </div>
+                
+                <div class="form-group">
+                    <label>Data Fim:</label>
+                    <input type="date" id="dateTo">
+                </div>
+                
+                <button class="btn-export" onclick="exportToExcel()">📥 Exportar Excel</button>
+            </div>
+        </div>
+
+        <div class="data-container">
+            <div id="loading" class="loading">Carregando dados...</div>
+            <div id="noData" class="no-data" style="display: none;">Nenhuma anamnese encontrada.</div>
+            
+            <table id="dataTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Paciente</th>
+                        <th>Idade</th>
+                        <th>Data Nasc.</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL DE DETALHES -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📄 Detalhes da Anamnese</h2>
+                <div>
+                    <button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
+                    <button class="btn-close" onclick="closeModal()">Fechar</button>
+                </div>
+            </div>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // 🔥 COLE SUAS CREDENCIAIS DO FIREBASE AQUI
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmk5Mcbrz48POdOJHrnLiyPqbrsEbVKbA",
+            authDomain: "sisa-esteticaavancada.firebaseapp.com",
+            projectId: "sisa-esteticaavancada",
+            storageBucket: "sisa-esteticaavancada.firebasestorage.app",
+            messagingSenderId: "356633488250",
+            appId: "1:356633488250:web:9dd1a70e5c05cff92d84c3"
+        };
+
+        let app, auth, db;
+        let allAnamneses = [];
+        let filteredAnamneses = [];
+
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            console.log("✅ Firebase inicializado com sucesso!");
+        } catch (error) {
+            console.error("❌ Erro ao inicializar Firebase:", error);
+            document.getElementById('loadingScreen').innerHTML = '❌ Erro ao conectar. Verifique as credenciais do Firebase.';
+        }
+
+        // TOGGLE PASSWORD
+        window.togglePassword = function() {
+            const input = document.getElementById('loginPassword');
+            const icon = document.getElementById('eyeIcon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                icon.textContent = '👁️';
+            }
+        };
+
+        // LOGIN
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const btnLogin = document.getElementById('btnLogin');
+            
+            btnLogin.disabled = true;
+            btnLogin.textContent = 'Entrando...';
+            errorMsg.style.display = 'none';
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                console.log("✅ Login realizado com sucesso!");
+            } catch (error) {
+                console.error("❌ Erro no login:", error);
+                errorMsg.textContent = '❌ Email ou senha incorretos!';
+                errorMsg.style.display = 'block';
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'Entrar';
+            }
+        });
+
+        // VERIFICAR AUTENTICAÇÃO
+        onAuthStateChanged(auth, async (user) => {
+            console.log("Estado de autenticação:", user);
+            
+            document.getElementById('loadingScreen').style.display = 'none';
+            
+            if (user) {
+                console.log("✅ Usuário logado:", user.email);
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('userEmail').textContent = user.email;
+                await loadAnamneses();
+            } else {
+                console.log("ℹ️ Usuário não logado");
+                document.getElementById('loginPage').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+            }
+        });
+
+        // LOGOUT
+        window.logout = async () => {
+            await signOut(auth);
+        };
+
+        // CARREGAR ANAMNESES
+        async function loadAnamneses() {
+            try {
+                console.log("📥 Carregando anamneses...");
+                const q = query(collection(db, "anamneses"), orderBy("dataEnvio", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                allAnamneses = [];
+                querySnapshot.forEach((doc) => {
+                    allAnamneses.push({ id: doc.id, ...doc.data() });
+                });
+                
+                console.log(`✅ ${allAnamneses.length} anamneses carregadas`);
+                
+                filteredAnamneses = [...allAnamneses];
+                updateStats();
+                renderTable();
+                
+                document.getElementById('loading').style.display = 'none';
+                
+            } catch (error) {
+                console.error("❌ Erro ao carregar:", error);
+                document.getElementById('loading').innerHTML = '❌ Erro ao carregar dados. Verifique as regras do Firestore.';
+            }
+        }
+
+        // ATUALIZAR ESTATÍSTICAS
+        function updateStats() {
+            const hoje = new Date().toISOString().split('T')[0];
+            const inicioSemana = new Date();
+            inicioSemana.setDate(inicioSemana.getDate() - 7);
+            
+            const totalHoje = allAnamneses.filter(a => {
+                const dataAnamnese = new Date(a.dataEnvio).toISOString().split('T')[0];
+                return dataAnamnese === hoje;
+            }).length;
+            
+            const totalSemana = allAnamneses.filter(a => {
+                const dataAnamnese = new Date(a.dataEnvio);
+                return dataAnamnese >= inicioSemana;
+            }).length;
+            
+            document.getElementById('totalAnamneses').textContent = allAnamneses.length;
+            document.getElementById('totalHoje').textContent = totalHoje;
+            document.getElementById('totalSemana').textContent = totalSemana;
+        }
+
+        // RENDERIZAR TABELA
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const table = document.getElementById('dataTable');
+            const noData = document.getElementById('noData');
+            
+            if (filteredAnamneses.length === 0) {
+                table.style.display = 'none';
+                noData.style.display = 'block';
+                return;
+            }
+            
+            table.style.display = 'table';
+            noData.style.display = 'none';
+            tbody.innerHTML = '';
+            
+            filteredAnamneses.forEach(anamnese => {
+                const tr = document.createElement('tr');
+                const data = new Date(anamnese.dataEnvio).toLocaleString('pt-BR');
+                
+                tr.innerHTML = `
+                    <td>${data}</td>
+                    <td>${anamnese.paciente || '-'}</td>
+                    <td>${anamnese.idade || '-'}</td>
+                    <td>${anamnese.dataNascimento || '-'}</td>
+                    <td>
+                        <button class="btn-view" onclick="viewDetails('${anamnese.id}')">👁️ Ver</button>
+                        <button class="btn-print" onclick="printAnamnese('${anamnese.id}')">🖨️ Imprimir</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // BUSCAR
+        document.getElementById('searchName').addEventListener('input', filterData);
+        document.getElementById('dateFrom').addEventListener('change', filterData);
+        document.getElementById('dateTo').addEventListener('change', filterData);
+
+        function filterData() {
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            filteredAnamneses = allAnamneses.filter(anamnese => {
+                const matchName = !searchName || (anamnese.paciente || '').toLowerCase().includes(searchName);
+                
+                let matchDate = true;
+                if (dateFrom || dateTo) {
+                    const dataAnamnese = new Date(anamnese.dataEnvio).toISOString().split('T')[0];
+                    if (dateFrom) matchDate = matchDate && dataAnamnese >= dateFrom;
+                    if (dateTo) matchDate = matchDate && dataAnamnese <= dateTo;
+                }
+                
+                return matchName && matchDate;
+            });
+            
+            renderTable();
+        }
+
+        // VER DETALHES
+        window.viewDetails = (id) => {
+            const anamnese = allAnamneses.find(a => a.id === id);
+            if (!anamnese) return;
+            
+            const content = document.getElementById('detailContent');
+            content.innerHTML = `
+                <div class="detail-section">
+                    <h3>Dados do Paciente</h3>
+                    <div class="detail-item">
+                        <div class="detail-label">Paciente:</div>
+                        <div class="detail-value">${anamnese.paciente || '-'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Idade:</div>
+                        <div class="detail-value">${anamnese.idade || '-'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Data de Nascimento:</div>
+                        <div class="detail-value">${anamnese.dataNascimento || '-'}</div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Histórico Clínico - Parte 2</h3>
+                    ${generateQuestions(anamnese)}
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Assinatura</h3>
+                    <div class="detail-item">
+                        <div class="detail-label">Assinatura:</div>
+                        <div class="detail-value">${anamnese.assinatura || '-'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Data:</div>
+                        <div class="detail-value">${anamnese.dataAssinatura || '-'}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('detailModal').style.display = 'block';
+        };
+
+        function generateQuestions(anamnese) {
+            const questions = {
+                'q21': '21. Você identifica que o canto da boca é caído/ virado para baixo?',
+                'q22': '22. O seu queixo tem furinhos como "celulite"?',
+                'q23': '23. Ao morder forte, você identifica rugas/ marcas no pescoço?',
+                'q24': '24. Na testa você tem rugas nas laterais da face, no sentido vertical ou diagonal?',
+                'q25': '25. Tem ou teve alguma doença grave?',
+                'q26': '26. Alergia lactose?',
+                'q27': '27. Alergia ovo?',
+                'q28': '28. Outra alergia:',
+                'q29': '29. Lesões na pele?',
+                'q30': '30. Cuidados estéticos diários Skin Care?',
+                'q31': '31. Está em uso de antibiótico, relaxante muscular, corticoides, anticoagulante ou anti inflamatório?',
+                'q32': '32. Mulheres: Gestante ou Lactante?',
+                'q33': '33. Fez vacina anti tetânica a pouco tempo?',
+                'q34': '34. Fez vacina Covid a pouco tempo?',
+                'q35': '35. Teve Covid?',
+                'q36': '36. Já realizou algum procedimento estético na face?',
+                'q37': '37. Como foi sua experiência anterior com Toxina Botulínica?',
+                'q38': '38. Se expõe ao sol com frequência?',
+                'q39': '39. Ingere pelo menos 2 litros de água por dia?',
+                'q40': '40. O que gostaria de melhorar em sua face? Ou prevenir?',
+                'q41': '41. Gostaria de informar algo que não foi perguntado?',
+                'q42': '42. Autoriza a divulgação de foto antes/ depois do tratamento?'
+            };
+            
+            let html = '';
+            for (const [key, question] of Object.entries(questions)) {
+                if (anamnese[key]) {
+                    html += `
+                        <div class="detail-item">
+                            <div class="detail-label">${question}</div>
+                            <div class="detail-value">${anamnese[key]}</div>
+                        </div>
+                    `;
+                }
+            }
+            return html;
+        }
+
+        window.closeModal = () => {
+            document.getElementById('detailModal').style.display = 'none';
+        };
+
+        window.printAnamnese = (id) => {
+            viewDetails(id);
+            setTimeout(() => window.print(), 100);
+        };
+
+        // EXPORTAR EXCEL
+        window.exportToExcel = () => {
+            if (filteredAnamneses.length === 0) {
+                alert('Nenhum dado para exportar!');
+                return;
+            }
+            
+            let csv = 'Data,Paciente,Idade,Data Nascimento,Q21,Q22,Q23,Q24,Q25,Q26,Q27,Q28,Q29,Q30,Q31,Q32,Q33,Q34,Q35,Q36,Q37,Q38,Q39,Q40,Q41,Q42\n';
+            
+            filteredAnamneses.forEach(a => {
+                const data = new Date(a.dataEnvio).toLocaleString('pt-BR');
+                csv += `"${data}","${a.paciente || ''}","${a.idade || ''}","${a.dataNascimento || ''}",`;
+                csv += `"${a.q21 || ''}","${a.q22 || ''}","${a.q23 || ''}","${a.q24 || ''}","${a.q25 || ''}",`;
+                csv += `"${a.q26 || ''}","${a.q27 || ''}","${a.q28 || ''}","${a.q29 || ''}","${a.q30 || ''}",`;
+                csv += `"${a.q31 || ''}","${a.q32 || ''}","${a.q33 || ''}","${a.q34 || ''}","${a.q35 || ''}",`;
+                csv += `"${a.q36 || ''}","${a.q37 || ''}","${a.q38 || ''}","${a.q39 || ''}","${a.q40 || ''}",`;
+                csv += `"${a.q41 || ''}","${a.q42 || ''}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `anamneses_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        };
+    </script>
+</body>
+</html>
