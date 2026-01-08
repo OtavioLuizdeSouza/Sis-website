@@ -3,6 +3,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #f5f5f5;
+}
+body.dark-bg {
     background-color: #080045;
 }
 .logo {
@@ -74,7 +77,7 @@ body {
     position: relative;
     cursor: default;
     background: #4e4e4e;
-    box-shadow: 0px 1px 8px whitesmoke;
+    box-shadow: 0px 1px 8px #4e4e4e;
 }
 #navegacaodoc a:link,
 #navegacaodoc a:visited {
@@ -141,6 +144,17 @@ a:hover {
     margin-top: auto;
     margin-bottom: 20px;
 
+}
+
+.footerdoc{
+    color: #4e4e4e;
+    text-align: center;
+    padding: 10px 0;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: 20px;
 }
 
 /* Login card styles */
@@ -275,3 +289,51 @@ input[type="date"] {
     background-color: whitesmoke;
     color: #4e4e4e;
 }
+
+/* Hide navigation and related UI when printing */
+@media print {
+    /* primary navigation bars */
+    #navegacao, #navegacaodoc { display: none !important; }
+    /* any top-left back buttons */
+    .btn-voltar { display: none !important; }
+    /* footer/logout links not needed on print */
+    .footer, .footerdoc, .logout-center { display: none !important; }
+    /* hide 'Fichas Existentes' title when printing */
+    .lista-titulo { display: none !important; }
+    /* hide action buttons area and the separate "Carregar ficha selecionada" button */
+    .actions { display: none !important; }
+    #btnCarregar { display: none !important; }
+    /* hide the dropdown trigger ("Selecione uma ficha...") in print */
+    .dropdown-trigger { display: none !important; }
+    /* ensure content prints on white background */
+    body { background: #fff !important; }
+}
+
+/* Shared page styles used by documentation forms */
+:root{--paper:#fff;--accent:#080045}
+body{background:transparent}
+.paper{max-width:780px;margin:24px auto;padding:24px;background:var(--paper);box-shadow:0 6px 18px rgba(0,0,0,0.06);border-radius:6px}
+.title{ text-align:center; font-weight:700; margin-bottom:6px }
+.subtitle{ text-align:center; color:var(--accent); margin-bottom:12px }
+.field-row{display:flex; gap:12px; align-items:center}
+label{font-weight:600}
+input[type=text]{padding:8px;border-radius:4px;border:1px solid #ccc;width:100%;box-sizing:border-box}
+textarea{width:100%;min-height:120px;padding:10px;border-radius:4px;border:1px solid #ccc;resize:vertical;box-sizing:border-box}
+.footer-line{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+.small-note{font-size:13px;color:#666}
+.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+.btn.secondary{background:#666}
+.meta-small{font-size:13px;color:#444}
+.dropdown-custom{position:relative;width:100%}
+.dropdown-trigger{width:100%;padding:8px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;text-align:left}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1px solid #ccc;border-top:none;border-radius:0 0 4px 4px;z-index:100;max-height:300px;overflow-y:auto}
+.dropdown-menu.open{display:block}
+.dropdown-search{padding:8px;border-bottom:1px solid #ccc}
+.dropdown-search input{width:100%;padding:6px;border:1px solid #ddd;border-radius:3px;box-sizing:border-box}
+.dropdown-option{padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0}
+.dropdown-option:hover{background:#f5f5f5}
+.dropdown-option.selected{background:#e8e8ff;font-weight:600}
+.btn-voltar{position:absolute;top:12px;left:12px;background:var(--accent);color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:14px}
+.btn-voltar:hover{opacity:0.9}
+@media print{.actions{display:none};.btn-voltar{display:none}}

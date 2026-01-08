@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ficha de Evolução</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root{--paper:#fff;--accent:#080045}
+    body{background:transparent}
+    .paper{max-width:780px;margin:24px auto;padding:24px;background:var(--paper);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .title{ text-align:center; font-weight:700; margin-bottom:6px }
+    .subtitle{ text-align:center; color:var(--accent); margin-bottom:12px }
+    .field-row{display:flex; gap:12px; align-items:center}
+    label{font-weight:600}
+    input[type=text]{padding:8px;border-radius:4px;border:1px solid #ccc;width:100%}
+    textarea{width:100%;min-height:420px;padding:10px;border-radius:4px;border:1px solid #ccc;resize:vertical}
+    .footer-line{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+    .small-note{font-size:13px;color:#666}
+    .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+    .btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+    .btn.secondary{background:#666}
+    .meta-small{font-size:13px;color:#444}
+    .dropdown-custom{position:relative;width:100%}
+    .dropdown-trigger{width:100%;padding:8px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;text-align:left}
+    .dropdown-menu{display:none;position:absolute;top:100%;left:0;right:0;background:white;border:1px solid #ccc;border-top:none;border-radius:0 0 4px 4px;z-index:100;max-height:300px;overflow-y:auto}
+    .dropdown-menu.open{display:block}
+    .dropdown-search{padding:8px;border-bottom:1px solid #ccc}
+    .dropdown-search input{width:100%;padding:6px;border:1px solid #ddd;border-radius:3px;box-sizing:border-box}
+    .dropdown-option{padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0}
+    .dropdown-option:hover{background:#f5f5f5}
+    .dropdown-option.selected{background:#e8e8ff;font-weight:600}
+    .btn-voltar{position:absolute;top:12px;left:12px;background:var(--accent);color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:14px}
+    .btn-voltar:hover{opacity:0.9}
+    @media print{.actions{display:none};.btn-voltar{display:none}}
+  </style>
+</head>
+<body>
+    <a href="documentacao-new.html" class="btn-voltar">← Voltar</a>
+    <div id="navegacaodoc">                    
+        <a href="https://www.google.com/maps/place/R.+Jo%C3%A3o+Francisco+Menezes+Junqueira,+597+-+Jardim+Virginia,+Batatais+-+SP,+14300-000/@-20.8840702,-47.579217,17z/data=!3m1!4b1!4m6!3m5!1s0x94b9fae61d7b9555:0xbc71aeb1d7e18d46!8m2!3d-20.8840752!4d-47.5766421!16s%2Fg%2F11thhwvm1t?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Nossa Localização</a> |
+        <a href="index.html" class="logo-link"><img class="logo" src="imagens/sisadoc.png" alt="Sisá"></a> |
+        <a href="login-new.html?redirect=documentacao-new.html"> Documentação</a>   
+    </div>
+
+  <div style="max-width:780px;margin:24px auto;padding:24px;background:#f9f9f9;border-radius:8px">
+    <div class="lista-titulo" style="font-weight:700;margin-bottom:12px">Fichas Existentes</div>
+    <div class="dropdown-custom">
+      <button type="button" class="dropdown-trigger" id="dropdownTrigger">Selecione uma ficha...</button>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-search">
+          <input id="pesquisaFicha" type="text" placeholder="Pesquisar por nome...">
+        </div>
+        <div id="fichaListContainer"></div>
+      </div>
+    </div>
+    <button type="button" id="btnCarregar" class="btn" style="width:100%;margin-top:12px;margin-bottom:12px">Carregar ficha selecionada</button>
+  </div>
+
+  <form id="fichaForm" class="paper">
+    <div class="title">FICHA DE EVOLUÇÃO</div>
+    <div class="field-row" style="margin-bottom:12px">
+      <div style="flex:2 ; margin-right:12px">
+        <label for="paciente">Nome:</label>
+        <input id="paciente" name="paciente" type="text" placeholder="Nome do paciente">
+      </div>
+      
+      <div style="width:160px">
+        <label class="meta-small">Ficha ID</label>
+        <div id="fichaId" class="meta-small" style="background:#f1f1f1;padding:6px;border-radius:4px;word-break:break-all">(nenhuma)</div>
+      </div>
+    </div>
+
+    <label for="evolucao" class="small-note">Evolução do paciente (Descrever detalhadamente tudo o que foi realizado no paciente):</label>
+    <textarea id="evolucao" name="evolucao" placeholder="Escreva aqui a evolução..."></textarea>
+
+    <div class="footer-line">
+      <div style="flex:1">
+        <div class="small-note">ASSINATURA DO PROFISSIONAL:</div>
+        <input id="assinatura_profissional" name="assinatura_profissional" type="text" placeholder="Assinatura do profissional" style="width:100%;margin-top:6px">
+      </div>
+    </div>
+
+    <div style="margin-top:12px" class="meta-small">OBS: Preencha com clareza e assine.</div>
+
+    <div class="actions">
+      <button type="button" id="btnNova" class="btn secondary">Nova ficha</button>
+      <button type="button" id="btnImprimir" class="btn secondary">Imprimir</button>
+      <button type="reset" id="btnLimpar" class="btn secondary">Limpar</button>
+      <button type="button" id="btnSalvar" class="btn">Salvar</button>
+    </div>
+
+    <div id="status" style="margin-top:10px;font-weight:600"></div>
+  </form>
+
+  <script type="module">
+    // Firebase config - same as toxina botulínica
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+    import { getFirestore, collection, addDoc, doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmk5Mcbrz48POdOJHrnLiyPqbrsEbVKbA",
+      authDomain: "sisa-esteticaavancada.firebaseapp.com",
+      projectId: "sisa-esteticaavancada",
+      storageBucket: "sisa-esteticaavancada.firebasestorage.app",
+      messagingSenderId: "356633488250",
+      appId: "1:356633488250:web:9dd1a70e5c05cff92d84c3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const btnNova = document.getElementById('btnNova');
+    const btnSalvar = document.getElementById('btnSalvar');
+    const btnImprimir = document.getElementById('btnImprimir');
+    const btnCarregar = document.getElementById('btnCarregar');
+    const dropdownTrigger = document.getElementById('dropdownTrigger');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const pesquisaFicha = document.getElementById('pesquisaFicha');
+    const fichaListContainer = document.getElementById('fichaListContainer');
+    const statusEl = document.getElementById('status');
+    const fichaIdEl = document.getElementById('fichaId');
+    const form = document.getElementById('fichaForm');
+
+    // Holds current Firestore document id for this ficha (if created)
+    let currentFichaId = null;
+    let selectedFichaId = null;
+    let allFichas = []; // store all fichas for filtering
+
+    // Toggle dropdown
+    dropdownTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdownMenu.classList.toggle('open');
+      if(dropdownMenu.classList.contains('open')){
+        pesquisaFicha.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if(!e.target.closest('.dropdown-custom')){
+        dropdownMenu.classList.remove('open');
+      }
+    });
+
+    // load list of existing fichas on page load
+    async function loadFichasList(){
+      try{
+        const { getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js');
+        const q = query(collection(db, 'anamnese'), where('type', '==', 'ficha_evolucao'));
+        const snap = await getDocs(q);
+        allFichas = [];
+        snap.forEach(doc => {
+          const data = doc.data();
+          allFichas.push({ id: doc.id, data });
+        });
+        renderFichasList('');
+      } catch(err){
+        console.error('Erro ao carregar fichas:', err);
+      }
+    }
+
+    function renderFichasList(filterText){
+      fichaListContainer.innerHTML = '';
+      const filtered = allFichas.filter(f => {
+        const paciente = (f.data.paciente || '').toLowerCase();
+        return paciente.includes(filterText.toLowerCase());
+      });
+      
+      if(filtered.length === 0){
+        const item = document.createElement('div');
+        item.className = 'dropdown-option';
+        item.style.color = '#999';
+        item.textContent = 'Nenhuma ficha encontrada';
+        fichaListContainer.appendChild(item);
+        return;
+      }
+
+      filtered.forEach(f => {
+        const paciente = f.data.paciente || 'Sem nome';
+        const label = `${paciente} - ${f.id.substring(0,8)}...`;
+        const item = document.createElement('div');
+        item.className = 'dropdown-option' + (selectedFichaId === f.id ? ' selected' : '');
+        item.textContent = label;
+        item.addEventListener('click', () => {
+          selectedFichaId = f.id;
+          dropdownTrigger.textContent = label;
+          dropdownMenu.classList.remove('open');
+          renderFichasList(pesquisaFicha.value);
+        });
+        fichaListContainer.appendChild(item);
+      });
+    }
+
+    function setStatus(msg, color=''){
+      statusEl.textContent = msg;
+      statusEl.style.color = color || '';
+    }
+
+    async function createEmptyFicha(){
+      setStatus('Criando nova ficha...', '#333');
+      try{
+        // create an empty doc in collection 'anamnese' with type 'ficha_evolucao'
+        const docRef = await addDoc(collection(db, 'anamnese'), { type: 'ficha_evolucao', createdAt: serverTimestamp() });
+        currentFichaId = docRef.id;
+        fichaIdEl.textContent = currentFichaId;
+        setStatus('Ficha criada (ID: ' + currentFichaId + ')', '#2a7f62');
+      } catch(err){
+        console.error(err);
+        setStatus('Erro ao criar ficha: ' + (err.message || err), 'salmon');
+      }
+    }
+
+    async function saveFicha(){
+      setStatus('Salvando...', '#333');
+      try{
+        const data = {
+          type: 'ficha_evolucao',
+          paciente: form.paciente.value || null,
+          evolucao: form.evolucao.value || null,
+          assinatura_profissional: form.assinatura_profissional.value || null,
+          updatedAt: serverTimestamp()
+        };
+
+        if(currentFichaId){
+          // update existing doc
+          const d = doc(db, 'anamnese', currentFichaId);
+          await updateDoc(d, data);
+          setStatus('Ficha salva (atualizada).', '#2a7f62');
+        } else {
+          // create new doc
+          const newDoc = await addDoc(collection(db, 'anamnese'), data);
+          currentFichaId = newDoc.id;
+          fichaIdEl.textContent = currentFichaId;
+          setStatus('Ficha salva (nova) ID: ' + currentFichaId, '#2a7f62');
+        }
+      } catch(err){
+        console.error(err);
+        setStatus('Erro ao salvar: ' + (err.message || err), 'salmon');
+      }
+    }
+
+    btnNova.addEventListener('click', async () => {
+      // clear form then create new ficha doc
+      form.reset();
+      currentFichaId = null;
+      selectedFichaId = null;
+      fichaIdEl.textContent = '(nenhuma)';
+      dropdownTrigger.textContent = 'Selecione uma ficha...';
+      pesquisaFicha.value = '';
+      dropdownMenu.classList.remove('open');
+      await createEmptyFicha();
+    });
+
+    btnCarregar.addEventListener('click', async () => {
+      const fichaId = selectedFichaId;
+      if(!fichaId){
+        setStatus('Selecione uma ficha para carregar.', '#666');
+        return;
+      }
+      setStatus('Carregando...', '#333');
+      try{
+        const { getDoc } = await import('https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js');
+        const snap = await getDoc(doc(db, 'anamnese', fichaId));
+        if(!snap.exists()){
+          setStatus('Ficha não encontrada.', 'salmon');
+          return;
+        }
+        const data = snap.data();
+        form.paciente.value = data.paciente || '';
+        form.evolucao.value = data.evolucao || '';
+        form.assinatura_profissional.value = data.assinatura_profissional || '';
+        currentFichaId = fichaId;
+        fichaIdEl.textContent = fichaId;
+        setStatus('Ficha carregada. Modifique e clique "Salvar".', '#2a7f62');
+      } catch(err){
+        console.error(err);
+        setStatus('Erro ao carregar: ' + (err.message || err), 'salmon');
+      }
+    });
+
+    btnSalvar.addEventListener('click', async () => {
+      await saveFicha();
+    });
+
+    btnImprimir.addEventListener('click', () => window.print());
+
+    pesquisaFicha.addEventListener('input', (e) => {
+      renderFichasList(e.target.value);
+    });
+
+    // On load, nothing selected (user will create new ficha or fill and save)
+    fichaIdEl.textContent = '(nenhuma)';
+    setStatus('Selecione uma ficha ou clique "Nova ficha" para começar.', '#444');
+    
+    // Load list of existing fichas
+    loadFichasList();
+  </script>
+
+  <footer class="footerdoc">
+    <p>© 2026 Sisá. Todos os direitos reservados.</p>
+    <p>Desenvolvido por: Otávio Luiz e Lorenzzo Uessugui</p>
+  </footer>
+</body>
+</html>

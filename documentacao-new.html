@@ -6,8 +6,63 @@
     <title>Documentação</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+        <style>
+                /* Cascade actions under a card */
+                .card.cascade-card{position:relative}
+                .cascade-actions{
+                    position:absolute;
+                    left:12px;
+                    right:12px;
+                    top:100%;
+                    /* place just below the card so it does not cover the existing button */
+                    display:flex;
+                    flex-direction:column;
+                    gap:8px;
+                    max-height:0;
+                    overflow:hidden;
+                    transform:translateY(-6px);
+                    opacity:0;
+                    transition:transform 260ms ease, opacity 260ms ease, max-height 260ms ease;
+                    z-index:20;
+                    pointer-events:none;
+                    background:#4e4e4e;
+                    padding:8px;
+                    border-radius:8px;
+                }
+                .cascade-actions.open{
+                    max-height:260px;
+                    transform:translateY(6px);
+                    opacity:1;
+                    pointer-events:auto;
+                }
+                /* Ensure cascade buttons are visually identical and don't shift on hover */
+                .cascade-actions .btn{
+                    width:100%;
+                    padding:8px 12px!important;
+                    border-radius:6px!important;
+                    box-shadow:none!important;
+                    margin:0!important;
+                    line-height:1.2;
+                    min-height:40px;
+                    color:#fff !important;
+                }
+                /* make both cascade buttons use #080045 background with white text */
+                .cascade-actions .btn-primary,
+                .cascade-actions .btn-secondary{
+                    background:#080045 !important;
+                    border:none !important;
+                    color:#fff !important;
+                }
+                .cascade-actions .btn:hover{
+                    box-shadow:none!important;
+                    transform:none!important;
+                    opacity:0.95;
+                }
+                /* Prevent global .card .btn-primary:hover rule from changing padding/margin inside cascade */
+                .card.cascade-card .card-body > #btnBotoxToggle:hover{box-shadow:none;transform:none}
+            </style>
 </head>
-<body>
+<body class="dark-bg">
     <div id="navegacao">                    
         <a href="https://www.google.com/maps/place/R.+Jo%C3%A3o+Francisco+Menezes+Junqueira,+597+-+Jardim+Virginia,+Batatais+-+SP,+14300-000/@-20.8840702,-47.579217,17z/data=!3m1!4b1!4m6!3m5!1s0x94b9fae61d7b9555:0xbc71aeb1d7e18d46!8m2!3d-20.8840752!4d-47.5766421!16s%2Fg%2F11thhwvm1t?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Nossa Localização</a> |
         <a href="index.html" class="logo-link"><img class="logo" src="imagens/sisa10050.png" alt="Sisá"></a> |
@@ -21,14 +76,32 @@
         }, 100);
     </script>
 
+        <script>
+            // Toggle cascade buttons under Toxina Botulínica card (use class open for animation)
+            document.addEventListener('DOMContentLoaded', function(){
+                const btn = document.getElementById('btnBotoxToggle');
+                const actions = document.getElementById('botoxActions');
+                if(btn && actions){
+                    btn.addEventListener('click', function(e){
+                        e.preventDefault();
+                        actions.classList.toggle('open');
+                    });
+                }
+            });
+        </script>
+
     <div style="max-width:1200px;margin:40px auto;color:white;padding:20px;">
         <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-            <div class="card" style="width: 15rem; display: flex; flex-direction: column;">
+                        <div class="card cascade-card" style="width: 15rem; display: flex; flex-direction: column; position:relative;">
                 <img src="imagens/botox.png" class="card-img-top" alt="...">
                 <div class="card-body" style="display: flex; flex-direction: column; flex-grow: 1;">
                     <h5 class="card-title">Toxina Botulínica</h5>
                     <p class="card-text">Aqui você verá os documentos referentes à Toxina Botulínica.</p>
-                    <a href="doctoxinabot.html" class="btn btn-primary" style="margin-top: auto;">Abrir documentação</a>
+                                        <button type="button" id="btnBotoxToggle" class="btn btn-primary" style="margin-top: auto;">Abrir documentação</button>
+                                        <div id="botoxActions" class="cascade-actions">
+                      <a href="TermoConsentimento.html" class="btn btn-secondary">Termo de Consentimento</a>
+                      <a href="doctoxinabot.html" class="btn btn-primary">Anamnese</a>
+                    </div>
                 </div>
             </div>
 
@@ -67,6 +140,15 @@
                     <a href="docterapiamol.html" class="btn btn-primary" style="margin-top: auto;">Abrir documentação</a>
                 </div>
             </div>
+
+                                    <div class="card" style="width: 15rem; display: flex; flex-direction: column;">
+                <img src="imagens/prancheta.png" class="card-img-top" alt="...">
+                <div class="card-body" style="display: flex; flex-direction: column; flex-grow: 1;">
+                    <h5 class="card-title">Ficha de evolução</h5>
+                    <p class="card-text">Aqui você verá os documentos referentes à Ficha de evolução.</p>
+                    <a href="docfichaevolucao.html" class="btn btn-primary" style="margin-top: auto;">Abrir documentação</a>
+                </div>
+            </div>
         </div>
 
         <div class="logout-center">
@@ -83,7 +165,7 @@
     </script>
 <footer class="footer">
     <p>© 2026 Sisá. Todos os direitos reservados.</p>
-    <p>Desenvolvido por Otávio Luiz de Souza</p>
+    <p>Desenvolvido por: Otávio Luiz e Lorenzzo Uessugui</p>
 </footer>
 </body>
 </html>

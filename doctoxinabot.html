@@ -6,257 +6,181 @@
     <title>Anamnese - Toxina Botulínica</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        :root{--bg:#fff;--accent:#080045;--muted:#666}
-        /* keep global site background from style.css; paper stays white */
-        body{font-family: Arial, Helvetica, sans-serif; background:transparent; margin:0; padding:24px; color:#111}
-        .paper{max-width:780px; margin:0 auto; background:var(--bg); padding:26px 34px; box-shadow:0 6px 18px rgba(0,0,0,0.08);}    
-        .header{display:flex; justify-content:space-between; align-items:flex-start;}
-        .brand{font-weight:700; color:#4e4e4e; font-size:28px; letter-spacing:1px}
-        .subtitle{font-family:'Georgia',serif; font-size:22px; color:#222}
-        .meta{margin-top:6px; font-size:14px; color:var(--muted)}
-        .row{display:flex; gap:12px; margin-top:16px}
-        .row > *{flex:1}
-        label{font-size:13px; color:#222}
-        input[type=text], input[type=date], input[type=number], textarea, select{width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #d0d0d5; border-radius:4px; background:#fff}
-        textarea{min-height:60px; resize:vertical}
-        .questions{margin-top:18px}
-        .q{margin-bottom:10px; display:flex; gap:12px; align-items:flex-start}
-        .q-number{width:40px; font-weight:600}
-        .q-body{flex:1}
-        .yesno{display:inline-flex; gap:10px; align-items:center}
-        .small{font-size:13px; color:var(--muted)}
-        .signature{margin-top:20px; display:flex; gap:16px; align-items:center}
-        .signature input{width:45%}
-        .notice{margin-top:18px; text-align:center; font-weight:700}
-        .actions{margin-top:18px; display:flex; justify-content:flex-end; gap:8px}
-        .btn{background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer}
-        @media print{body{background:#fff} .paper{box-shadow:none; margin:0; padding:12px} .actions{display:none}}
+      /* Page-specific adjustments */
+      .questions{max-width:600px;margin:0 auto}
+      .questions .q{display:block;padding:12px 0;border-bottom:1px dashed #eee;text-align:center}
+      .q-number{font-weight:700;display:inline;margin-right:6px}
+      .q-body{display:inline}
+      .q-body label:first-child{display:inline;line-height:1.4}
+      .yesno{margin-top:6px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+      .yesno label{margin:0}
+      input[type=text], input[type=email], input[type=tel], textarea{padding:8px;border:1px solid #ccc;border-radius:4px;font-family:inherit;font-size:14px}
+      textarea{width:100%;min-height:64px;resize:vertical}
+      .meta-grid{display:flex;flex-wrap:wrap;gap:10px}
+      .meta-grid label{flex:1 1 45%}
+      .meta-grid input[type=text], .meta-grid input[type=date], .meta-grid input[type=tel], .meta-grid input[type=email]{width:100%;box-sizing:border-box}
+      @media print{.actions{display:none} }
     </style>
 </head>
 <body>
-    <div id="navegacaodoc">                    
+    <a href="documentacao-new.html" class="btn-voltar">← Voltar</a>
+    <div id="navegacaodoc">
         <a href="https://www.google.com/maps/place/R.+Jo%C3%A3o+Francisco+Menezes+Junqueira,+597+-+Jardim+Virginia,+Batatais+-+SP,+14300-000/@-20.8840702,-47.579217,17z/data=!3m1!4b1!4m6!3m5!1s0x94b9fae61d7b9555:0xbc71aeb1d7e18d46!8m2!3d-20.8840752!4d-47.5766421!16s%2Fg%2F11thhwvm1t?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Nossa Localização</a> |
         <a href="index.html" class="logo-link"><img class="logo" src="imagens/sisadoc.png" alt="Sisá"></a> |
-        <a href="documentacao-new.html"> Documentação</a>   
+        <a href="login-new.html?redirect=documentacao-new.html"> Documentação</a>
     </div>
-    <main class="paper">
-        <div class="header">
-            <div>
-                <div class="brand">ANAMNESE</div>
-                <div class="subtitle">Toxina Botulínica</div>
-                <div class="row" style="align-items:center; gap:12px; margin-top:8px">
-                    <div style="flex:2">
-                        <label style="font-weight:600">Paciente:</label>
-                        <input type="text" name="paciente" id="paciente" placeholder="Nome do paciente" style="width:100%; margin-top:6px">
-                    </div>
-                    <div style="flex:1">
-                        <label style="font-weight:600">Idade:</label>
-                        <input type="number" name="idade" id="idade" style="width:100%; margin-top:6px">
-                    </div>
-                </div>
-                <div class="meta" style="margin-top:10px">Data de Nascimento: <input type="date" name="data_nascimento" id="data_nascimento" style="display:inline-block; margin-left:8px; width:220px"></div>
-            </div>
-            <div style="text-align:right; font-size:12px; color:var(--muted)">
-                <!-- espaço para logo ou identificação -->
-            </div>
+
+    <div style="max-width:780px;margin:18px auto;padding:0 8px">
+<h1 style="text-align: center; color:#4e4e4e;">ANAMNESE</h1>
+      <h2 style="text-align:center;margin-bottom:10px; color:#4e4e4e">Toxina Botulínica</h2>
+    </div>
+
+    <form id="anamneseForm" class="paper" style="max-width:780px;margin:12px auto;padding:18px">
+        <div class="field-row meta-grid" style="margin-bottom:12px">
+            <label>Paciente: <input type="text" name="paciente"></label>
+            <label>Idade: <input type="text" name="idade"></label>
+            <label>Endereço: <input type="text" name="endereco"></label>
+            <label>Bairro: <input type="text" name="bairro"></label>
+            <label>Data de Nascimento: <input type="date" name="data_nascimento"></label>
+            <label>RG: <input type="text" name="rg"></label>
+            <label>CPF: <input type="text" name="cpf"></label>
+            <label>Celular: <input type="tel" name="celular"></label>
+            <label>E-mail: <input type="email" name="email"></label>
         </div>
 
         <section class="questions">
-            <div class="q">
-                <div class="q-number">1.</div>
-                <div class="q-body">
-                    <label>Você identifica que o canto da boca é caído/virado para baixo (como sorriso triste)?</label>
-                    <div class="yesno"><label><input type="radio" name="q1" value="sim"> Sim</label> <label><input type="radio" name="q1" value="nao"> Não</label></div>
-                </div>
+                <div class="q"><div class="q-number">1.</div><div class="q-body"><label>Você gosta do seu sorriso? </label><div class="yesno"><label><input type="radio" name="q1" value="sim"> Sim</label><label><input type="radio" name="q1" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">2.</div><div class="q-body"><label>Mostra a gengiva ao sorrir? </label><div class="yesno"><label><input type="radio" name="q2" value="sim"> Sim</label><label><input type="radio" name="q2" value="nao"> Não</label></div><div style="margin-top:6px">Quanto? <label><input type="radio" name="q2_quanto" value="muito"> Muito</label> <label><input type="radio" name="q2_quanto" value="quase_nada"> Quase nada</label></div></div></div>
+                <div class="q"><div class="q-number">3.</div><div class="q-body"><label>Você gosta do formato e volume dos seus lábios? </label><div class="yesno"><label><input type="radio" name="q3" value="sim"> Sim</label><label><input type="radio" name="q3" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">4.</div><div class="q-body"><label>Seus lábios somem ao sorrir? </label><div class="yesno"><label><input type="radio" name="q4" value="sim"> Sim</label><label><input type="radio" name="q4" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">5.</div><div class="q-body"><label>Você nota marcas de expressão ao sorrir ou falar? </label><div class="yesno"><label><input type="radio" name="q5" value="sim"> Sim</label><label><input type="radio" name="q5" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">5.1</div><div class="q-body"><label>Como são essas marcas?</label><div class="yesno"><label><input type="radio" name="q5_1" value="suaves"> Suaves</label><label><input type="radio" name="q5_1" value="fortes"> Fortes</label></div></div></div>
+                <div class="q"><div class="q-number">6.</div><div class="q-body"><label>Você sente dores de cabeça? </label><div class="yesno"><label><input type="radio" name="q6" value="sim"> Sim</label><label><input type="radio" name="q6" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">6.1</div><div class="q-body"><label>Você usa medicação para essa dor? </label><div class="yesno"><label><input type="radio" name="q6_1" value="sim"> Sim</label><label><input type="radio" name="q6_1" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">6.2</div><div class="q-body"><label>Nota que tem relação com tensão ou estresse? </label><div class="yesno"><label><input type="radio" name="q6_2" value="sim"> Sim</label><label><input type="radio" name="q6_2" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">7.</div><div class="q-body"><label>Aperta ou range os dentes? </label><div class="yesno"><label><input type="radio" name="q7" value="sim"> Sim</label><label><input type="radio" name="q7" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">8.</div><div class="q-body"><label>Ouve ruídos na articulação da mandíbula? </label><div class="yesno"><label><input type="radio" name="q8" value="sim"> Sim</label><label><input type="radio" name="q8" value="nao"> Não</label><label><input type="radio" name="q8" value="as_vezes"> Às vezes</label></div></div></div>
+                <div class="q"><div class="q-number">9.</div><div class="q-body"><label>Você nota alguma flacidez na pele do rosto? </label><div class="yesno"><label><input type="radio" name="q9" value="sim"> Sim</label><label><input type="radio" name="q9" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">10.</div><div class="q-body"><label>Identifica movimento no nariz ao falar? </label><div class="yesno"><label><input type="radio" name="q10" value="sim"> Sim</label><label><input type="radio" name="q10" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">11.</div><div class="q-body"><label>A ponta do nariz é baixa? </label><div class="yesno"><label><input type="radio" name="q11" value="sim"> Sim</label><label><input type="radio" name="q11" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">12.</div><div class="q-body"><label>As ruguinhas do nariz te incomodam? </label><div class="yesno"><label><input type="radio" name="q12" value="sim"> Sim</label><label><input type="radio" name="q12" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">13.</div><div class="q-body"><label>Você nota que ele "caiu" com o passar do tempo? </label><div class="yesno"><label><input type="radio" name="q13" value="sim"> Sim</label><label><input type="radio" name="q13" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">14.</div><div class="q-body"><label>A sua sobrancelha é arqueada? </label><div class="yesno"><label><input type="radio" name="q14" value="sim"> Sim</label><label><input type="radio" name="q14" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">15.</div><div class="q-body"><label>Tem micropigmentação? </label><div class="yesno"><label><input type="radio" name="q15" value="sim"> Sim</label><label><input type="radio" name="q15" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">16.</div><div class="q-body"><label>Você gostaria de abrir seu olhar/elevar a sobrancelha? </label><div class="yesno"><label><input type="radio" name="q16" value="sim"> Sim</label><label><input type="radio" name="q16" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">17.</div><div class="q-body"><label>Você acha que seu olhar é cansado? </label><div class="yesno"><label><input type="radio" name="q17" value="sim"> Sim</label><label><input type="radio" name="q17" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">18.</div><div class="q-body"><label>Você identifica rugas abaixo dos olhos? </label><div class="yesno"><label><input type="radio" name="q18" value="sim"> Sim</label><label><input type="radio" name="q18" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">19.</div><div class="q-body"><label>Gostaria de melhorar a região dos olhos? </label><div class="yesno"><label><input type="radio" name="q19" value="sim"> Sim</label><label><input type="radio" name="q19" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">20.</div><div class="q-body"><label>Você identifica rugas na região dos lábios (código de barras)? </label><div class="yesno"><label><input type="radio" name="q20" value="sim"> Sim</label><label><input type="radio" name="q20" value="nao"> Não</label></div></div></div>
+            </section>
+
+        <section class="questions">
+                <div class="q"><div class="q-number">21.</div><div class="q-body"><label>Você identifica que o canto da boca é caído/virado para baixo (como sorriso triste)?</label><div class="yesno"><label><input type="radio" name="q21" value="sim"> Sim</label><label><input type="radio" name="q21" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">22.</div><div class="q-body"><label>O seu queixo tem furinhos como "celulite"? </label><div class="yesno"><label><input type="radio" name="q22" value="sim"> Sim</label><label><input type="radio" name="q22" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">23.</div><div class="q-body"><label>Ao morder forte, você identifica rugas/marcas no pescoço? </label><div class="yesno"><label><input type="radio" name="q23" value="sim"> Sim</label><label><input type="radio" name="q23" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">24.</div><div class="q-body"><label>Na testa você tem rugas nas laterais da face, no sentido vertical ou diagonal? </label><div class="yesno"><label><input type="radio" name="q24" value="sim"> Sim</label><label><input type="radio" name="q24" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">25.</div><div class="q-body"><label>Tem ou teve alguma doença grave? </label><div class="yesno"><label><input type="radio" name="q25" value="sim"> Sim</label><label><input type="radio" name="q25" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">26.</div><div class="q-body"><label>Alergia lactose? </label><div class="yesno"><label><input type="radio" name="q26" value="sim"> Sim</label><label><input type="radio" name="q26" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">27.</div><div class="q-body"><label>Alergia ovo? </label><div class="yesno"><label><input type="radio" name="q27" value="sim"> Sim</label><label><input type="radio" name="q27" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">28.</div><div class="q-body"><label>Outra alergia: <input type="text" name="q28_outro" placeholder="Especifique" style="width:60%"></label></div></div>
+                <div class="q"><div class="q-number">29.</div><div class="q-body"><label>Lesões na pele? </label><div class="yesno"><label><input type="radio" name="q29" value="sim"> Sim</label><label><input type="radio" name="q29" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">30.</div><div class="q-body"><label>Cuidados estéticos diários Skin Care? </label><div class="yesno"><label><input type="radio" name="q30" value="sim"> Sim</label><label><input type="radio" name="q30" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">31.</div><div class="q-body"><label>Está em uso de antibiótico, relaxante muscular, corticoide, anticoagulante ou anti inflamatório? </label><div class="yesno"><label><input type="radio" name="q31" value="sim"> Sim</label><label><input type="radio" name="q31" value="nao"> Não</label></div><div style="margin-top:6px">Se sim, qual? <input type="text" name="q31_motivo" style="width:60%"></div></div></div>
+                <div class="q"><div class="q-number">32.</div><div class="q-body"><label>Mulheres: Gestante ou Lactante? </label><div class="yesno"><label><input type="radio" name="q32" value="sim"> Sim</label><label><input type="radio" name="q32" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">33.</div><div class="q-body"><label>Fez vacina anti tetânica a pouco tempo? </label><div class="yesno"><label><input type="radio" name="q33" value="sim"> Sim</label><label><input type="radio" name="q33" value="nao"> Não</label></div><div style="margin-top:6px">Quanto tempo? <input type="text" name="q33_quanto" style="width:40%"></div></div></div>
+                <div class="q"><div class="q-number">34.</div><div class="q-body"><label>Fez vacina Covid a pouco tempo? </label><div class="yesno"><label><input type="radio" name="q34" value="sim"> Sim</label><label><input type="radio" name="q34" value="nao"> Não</label></div><div style="margin-top:6px">Quanto tempo? <input type="text" name="q34_quanto" style="width:40%"></div></div></div>
+                <div class="q"><div class="q-number">35.</div><div class="q-body"><label>Teve Covid? </label><div class="yesno"><label><input type="radio" name="q35" value="sim"> Sim</label><label><input type="radio" name="q35" value="nao"> Não</label></div><div style="margin-top:6px">Quando? <input type="text" name="q35_quando" style="width:40%"></div></div></div>
+                <div class="q"><div class="q-number">36.</div><div class="q-body"><label>Já realizou algum procedimento estético na face? (Toxina Botulínica, ácido hialurônico, bioestimulador de colágeno, microagulhamento, peeling, hidratação injetável, PMMA, Lifting, cirurgia plástica, outros) </label><div class="yesno"><label><input type="radio" name="q36" value="sim"> Sim</label><label><input type="radio" name="q36" value="nao"> Não</label></div><div style="margin-top:6px">Se sim, quais procedimentos realizou e quanto tempo faz a ultima aplicação?<textarea name="q36_detalle" placeholder="Descreva"></textarea></div></div></div>
+                <div class="q"><div class="q-number">37.</div><div class="q-body"><label>Como foi sua experiência anterior com Toxina Botulínica?</label><textarea name="q37_exp" placeholder="Descreva"></textarea></div></div>
+                <div class="q"><div class="q-number">38.</div><div class="q-body"><label>Se expõe ao sol com frequência? </label><div class="yesno"><label><input type="radio" name="q38" value="sim"> Sim</label><label><input type="radio" name="q38" value="nao"> Não</label></div><div style="margin-top:6px">Usa protetor solar? <label><input type="radio" name="q38_protetor" value="sim"> Sim</label><label><input type="radio" name="q38_protetor" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">39.</div><div class="q-body"><label>Ingere pelo menos 2 litros de água por dia? </label><div class="yesno"><label><input type="radio" name="q39" value="sim"> Sim</label><label><input type="radio" name="q39" value="nao"> Não</label></div></div></div>
+                <div class="q"><div class="q-number">40.</div><div class="q-body"><label>O que gostaria de melhorar em sua face? Ou prevenir?</label><textarea name="q40" placeholder="Descreva"></textarea></div></div>
+                <div class="q"><div class="q-number">41.</div><div class="q-body"><label>Gostaria de informar algo que não foi perguntado? </label><div class="yesno"><label><input type="radio" name="q41" value="sim"> Sim</label><label><input type="radio" name="q41" value="nao"> Não</label></div><div style="margin-top:6px">Cite: <input type="text" name="q41_cite" style="width:70%"></div></div></div>
+                <div class="q"><div class="q-number">42.</div><div class="q-body"><label>Autoriza a divulgação de foto antes/depois do tratamento?</label><div class="yesno"><label><input type="radio" name="q42" value="sim"> Sim</label><label><input type="radio" name="q42" value="nao"> Não</label></div></div></div>
+            </section>
+
+        <div class="notice" style="margin-top:10px">RESPONSABILIZO-ME PELA VERACIDADE DE TODAS AS RESPOSTAS ACIMA CITADAS</div>
+
+        <div class="field-row" style="margin-top:10px;gap:12px;align-items:center">
+            <div style="flex:1">
+                <label class="meta-small">ASSINATURA:</label>
+                <input type="text" name="assinatura" id="assinatura" placeholder="Assinatura" style="width:100%;margin-top:6px">
             </div>
-
-            <div class="q">
-                <div class="q-number">2.</div>
-                <div class="q-body">
-                    <label>O seu queixo tem furinhos como "celulite"?</label>
-                    <div class="yesno"><label><input type="radio" name="q2" value="sim"> Sim</label> <label><input type="radio" name="q2" value="nao"> Não</label></div>
-                </div>
+            <div style="width:160px">
+                <label class="meta-small">Data</label>
+                <input type="date" name="assinatura_data" id="assinatura_data" style="width:100%;margin-top:6px">
             </div>
-
-            <div class="q">
-                <div class="q-number">3.</div>
-                <div class="q-body">
-                    <label>Ao morder forte, você identifica rugas/marcas no pescoço?</label>
-                    <div class="yesno"><label><input type="radio" name="q3" value="sim"> Sim</label> <label><input type="radio" name="q3" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">4.</div>
-                <div class="q-body">
-                    <label>Na testa você tem rugas nas laterais da face, no sentido vertical ou diagonal?</label>
-                    <div class="yesno"><label><input type="radio" name="q4" value="sim"> Sim</label> <label><input type="radio" name="q4" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">5.</div>
-                <div class="q-body">
-                    <label>Tem ou teve alguma doença grave?</label>
-                    <div class="yesno"><label><input type="radio" name="q5" value="sim"> Sim</label> <label><input type="radio" name="q5" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">6.</div>
-                <div class="q-body">
-                    <label>Alergia lactose?</label>
-                    <div class="yesno"><label><input type="radio" name="q6" value="sim"> Sim</label> <label><input type="radio" name="q6" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">7.</div>
-                <div class="q-body">
-                    <label>Alergia ovo?</label>
-                    <div class="yesno"><label><input type="radio" name="q7" value="sim"> Sim</label> <label><input type="radio" name="q7" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">8.</div>
-                <div class="q-body">
-                    <label>Outra alergia: <input type="text" name="q8_outro" placeholder="Especifique"></label>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">9.</div>
-                <div class="q-body">
-                    <label>Lesões na pele?</label>
-                    <div class="yesno"><label><input type="radio" name="q9" value="sim"> Sim</label> <label><input type="radio" name="q9" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">10.</div>
-                <div class="q-body">
-                    <label>Cuidados estéticos diários Skin Care?</label>
-                    <div class="yesno"><label><input type="radio" name="q10" value="sim"> Sim</label> <label><input type="radio" name="q10" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">11.</div>
-                <div class="q-body">
-                    <label>Está em uso de antibiótico, relaxante muscular, corticoide, anticoagulante ou anti inflamatório? Se sim, qual?</label>
-                    <input type="text" name="q11_motivo" placeholder="Motivo / medicamento">
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">12.</div>
-                <div class="q-body">
-                    <label>Mulheres: Gestante ou Lactante?</label>
-                    <div class="yesno"><label><input type="radio" name="q12" value="sim"> Sim</label> <label><input type="radio" name="q12" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">13.</div>
-                <div class="q-body">
-                    <label>Fez vacina anti tetânica a pouco tempo?</label>
-                    <div class="yesno"><label><input type="radio" name="q13" value="sim"> Sim</label> <label><input type="radio" name="q13" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">14.</div>
-                <div class="q-body">
-                    <label>Fez vacina Covid a pouco tempo?</label>
-                    <div class="yesno"><label><input type="radio" name="q14" value="sim"> Sim</label> <label><input type="radio" name="q14" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">15.</div>
-                <div class="q-body">
-                    <label>Teve Covid?</label>
-                    <div style="margin-top:6px"><label><input type="radio" name="q15" value="sim"> Sim</label> <label><input type="radio" name="q15" value="nao"> Não</label> <span class="small">Se sim, quando? <input type="text" name="q15_quando" placeholder="Data / período" style="width:220px"></span></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">16.</div>
-                <div class="q-body">
-                    <label>Já realizou algum procedimento estético na face? (Toxina Botulínica, ácido hialurônico, bioestimulador de colágeno, microagulhamento, peeling, hidratação injetável, PMMA, Lifting, cirurgia plástica, outros)</label>
-                    <div style="margin-top:6px"><label><input type="radio" name="q16" value="sim"> Sim</label> <label><input type="radio" name="q16" value="nao"> Não</label></div>
-                    <div style="margin-top:8px"><label>Se sim, quais procedimentos realizou e quanto tempo faz a ultima aplicação?</label>
-                        <textarea name="q16_detalle" placeholder="Descreva"></textarea></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">17.</div>
-                <div class="q-body">
-                    <label>Como foi sua experiência anterior com Toxina Botulínica?</label>
-                    <textarea name="q17_exp" placeholder="Descreva"></textarea>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">18.</div>
-                <div class="q-body">
-                    <label>Se expõe ao sol com frequência?</label>
-                    <div class="yesno"><label><input type="radio" name="q18" value="sim"> Sim</label> <label><input type="radio" name="q18" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">19.</div>
-                <div class="q-body">
-                    <label>Ingere pelo menos 2 litros de água por dia?</label>
-                    <div class="yesno"><label><input type="radio" name="q19" value="sim"> Sim</label> <label><input type="radio" name="q19" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">20.</div>
-                <div class="q-body">
-                    <label>O que gostaria de melhorar em sua face? Ou prevenir?</label>
-                    <textarea name="q20" placeholder="Descreva"></textarea>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">21.</div>
-                <div class="q-body">
-                    <label>Gostaria de informar algo que não foi perguntado?</label>
-                    <div class="yesno"><label><input type="radio" name="q21" value="sim"> Sim</label> <label><input type="radio" name="q21" value="nao"> Não</label></div>
-                    <div style="margin-top:8px"><label>Cite: <input type="text" name="q21_cite" placeholder="Escreva" style="width:60%"></label></div>
-                </div>
-            </div>
-
-            <div class="q">
-                <div class="q-number">22.</div>
-                <div class="q-body">
-                    <label>Autoriza a divulgação de foto antes/depois do tratamento?</label>
-                    <div class="yesno"><label><input type="radio" name="q22" value="sim"> Sim</label> <label><input type="radio" name="q22" value="nao"> Não</label></div>
-                </div>
-            </div>
-
-        </section>
-
-        <div class="notice">RESPONSABILIZO-ME PELA VERACIDADE DE TODAS AS RESPOSTAS ACIMA CITADAS</div>
-
-        <div class="signature">
-            <label style="width:65%">Assinatura: <input type="text" name="assinatura" id="assinatura" placeholder="Assinatura" style="width:100%; margin-left:8px"></label>
-            <label>Data: <input type="date" name="assinatura_data" id="assinatura_data" style="margin-left:8px"></label>
         </div>
 
-        <div class="actions">
-            <button type="button" class="btn" style="background:#4e4e4e" onclick="window.print();">Imprimir</button>
-            <button type="reset" class="btn" style="background:#4e4e4e">Limpar</button>
+        <div class="actions" style="margin-top:12px;justify-content:flex-end">
+            <button type="button" class="btn secondary" onclick="window.print();">Imprimir</button>
+            <button type="reset" class="btn secondary">Limpar</button>
+            <button id="btnEnviar" type="button" class="btn">Enviar</button>
         </div>
-    </main>
-    <footer class="footer">
-        <p>© 2026 Sisá. Todos os direitos reservados.</p>
-        <p>Desenvolvido por Otávio Luiz de Souza</p>
+        <div id="statusMsg" style="margin-top:10px;font-weight:600"></div>
+    </form>
+
+    <script type="module">
+    // Firebase initialization and submit handler (Firestore)
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+    import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDmk5Mcbrz48POdOJHrnLiyPqbrsEbVKbA",
+        authDomain: "sisa-esteticaavancada.firebaseapp.com",
+        projectId: "sisa-esteticaavancada",
+        storageBucket: "sisa-esteticaavancada.firebasestorage.app",
+        messagingSenderId: "356633488250",
+        appId: "1:356633488250:web:9dd1a70e5c05cff92d84c3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('anamneseForm');
+    const btn = document.getElementById('btnEnviar');
+    const status = document.getElementById('statusMsg');
+
+    function formToObject(formEl){
+        const fd = new FormData(formEl);
+        const obj = {};
+        for(const [k,v] of fd.entries()){
+            if(obj[k] !== undefined){
+                if(!Array.isArray(obj[k])) obj[k] = [obj[k]];
+                obj[k].push(v);
+            } else {
+                obj[k] = v;
+            }
+        }
+        return obj;
+    }
+
+    btn.addEventListener('click', async () => {
+        try{
+            btn.disabled = true;
+            status.style.color = '#06a000';
+            status.textContent = 'Enviando...';
+
+            const data = formToObject(form);
+            data.createdAt = serverTimestamp();
+
+            await addDoc(collection(db, 'anamnese'), data);
+
+            status.style.color = '#0a7';
+            status.textContent = 'Enviado com sucesso.';
+            btn.disabled = false;
+        } catch(err){
+            console.error(err);
+            status.style.color = 'salmon';
+            status.textContent = 'Erro ao enviar: ' + (err.message || err);
+            btn.disabled = false;
+        }
+    });
+    </script>
+
+    <footer class="footerdoc">
+            <p>© 2026 Sisá. Todos os direitos reservados.</p>
+            <p>Desenvolvido por: Otávio Luiz e Lorenzzo Uessugui</p>
     </footer>
 </body>
 </html>
